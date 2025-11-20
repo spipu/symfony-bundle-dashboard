@@ -14,7 +14,7 @@
     {% endif %}
     function initWidget_{{ manager.definition.id }}()
     {
-        new GoogleGraphPlots(
+        new SpipuGraphPlots(
             'widget_{{ manager.definition.id }}_graph',
             '{{ manager.request.period.dateFrom|date('Y-m-d H:i:s') }}',
             '{{ manager.request.period.dateToReal|date('Y-m-d H:i:s') }}',
