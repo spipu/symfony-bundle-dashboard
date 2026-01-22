@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Spipu\DashboardBundle\Entity\Source;
 
+use Closure;
 use Spipu\UiBundle\Form\Options\OptionsInterface;
 
 class SourceFilter
@@ -46,6 +47,16 @@ class SourceFilter
      * @var bool
      */
     private bool $translate;
+
+    /**
+     * @var Closure|null
+     */
+    private ?Closure $specificSqlQueryFilterClosure = null;
+
+    /**
+     * @var Closure|null
+     */
+    private ?Closure $specificDqlQueryFilterClosure = null;
 
     /**
      * @param string $code
@@ -143,5 +154,43 @@ class SourceFilter
         }
 
         return false;
+    }
+
+    /**
+     * @return Closure|null
+     */
+    public function getSpecificSqlQueryFilterClosure(): ?Closure
+    {
+        return $this->specificSqlQueryFilterClosure;
+    }
+
+    /**
+     * Format: function(callable $quote, SourceFilter $filter, string $entityField, $value): string
+     * @param Closure $specificSqlQueryFilterClosure
+     * @return $this
+     */
+    public function setSpecificSqlQueryFilterClosure(Closure $specificSqlQueryFilterClosure): SourceFilter
+    {
+        $this->specificSqlQueryFilterClosure = $specificSqlQueryFilterClosure;
+        return $this;
+    }
+
+    /**
+     * @return Closure|null
+     */
+    public function getSpecificDqlQueryFilterClosure(): ?Closure
+    {
+        return $this->specificDqlQueryFilterClosure;
+    }
+
+    /**
+     * Format: function(QueryBuilder $qb, Expr\Andx $where, SourceFilter $filter, string $entityField, $value): array
+     * @param Closure $specificDqlQueryFilterClosure
+     * @return $this
+     */
+    public function setSpecificDqlQueryFilterClosure(Closure $specificDqlQueryFilterClosure): SourceFilter
+    {
+        $this->specificDqlQueryFilterClosure = $specificDqlQueryFilterClosure;
+        return $this;
     }
 }
