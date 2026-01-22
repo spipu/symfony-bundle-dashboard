@@ -142,18 +142,26 @@ class DoctrineDql extends AbstractDataProvider
         string $code,
         $value
     ): array {
-        $parameters = [];
         $filter = $this->definition->getFilter($code);
         $entityField = $this->getDqlFieldName($filter->getEntityField());
 
-        if ($filter->isMultiple()) {
-            $expression = $queryBuilder->expr()->in($entityField, ':' . $code);
-            $where->add($expression);
-            $parameters[':' . $code] = $value;
-            return $parameters;
+        if ($filter->isMultiple() && !is_array($value)) {
+            $value = [$value];
         }
-        $expression = $queryBuilder->expr()->eq($entityField, ':' . $code);
+
+        $closure = $filter->getSpecificDqlQueryFilterClosure();
+        if ($closure) {
+            return $closure($queryBuilder, $where, $filter, $entityField, $value);
+        }
+
+        // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+        $expression = $filter->isMultiple()
+            ? $queryBuilder->expr()->in($entityField, ':' . $code)
+            : $queryBuilder->expr()->eq($entityField, ':' . $code)
+        ;
+
         $where->add($expression);
+        $parameters = [];
         $parameters[':' . $code] = $value;
         return $parameters;
     }
