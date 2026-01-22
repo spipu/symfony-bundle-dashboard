@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Spipu\DashboardBundle\Entity\Source;
 
+use Closure;
 use Spipu\UiBundle\Form\Options\OptionsInterface;
 
 class SourceFilter
@@ -23,6 +24,8 @@ class SourceFilter
     private OptionsInterface $options;
     private bool $multiple = false;
     private bool $translate;
+    private ?Closure $specificSqlQueryFilterClosure = null;
+    private ?Closure $specificDqlQueryFilterClosure = null;
 
     /**
      * @param string $code
@@ -93,5 +96,33 @@ class SourceFilter
         }
 
         return false;
+    }
+
+    public function getSpecificSqlQueryFilterClosure(): ?Closure
+    {
+        return $this->specificSqlQueryFilterClosure;
+    }
+
+    /**
+     * Format: function(callable $quote, SourceFilter $filter, string $entityField, $value): string
+     */
+    public function setSpecificSqlQueryFilterClosure(Closure $specificSqlQueryFilterClosure): SourceFilter
+    {
+        $this->specificSqlQueryFilterClosure = $specificSqlQueryFilterClosure;
+        return $this;
+    }
+
+    public function getSpecificDqlQueryFilterClosure(): ?Closure
+    {
+        return $this->specificDqlQueryFilterClosure;
+    }
+
+    /**
+     * Format: function(QueryBuilder $qb, Expr\Andx $where, SourceFilter $filter, string $entityField, $value): array
+     */
+    public function setSpecificDqlQueryFilterClosure(Closure $specificDqlQueryFilterClosure): SourceFilter
+    {
+        $this->specificDqlQueryFilterClosure = $specificDqlQueryFilterClosure;
+        return $this;
     }
 }

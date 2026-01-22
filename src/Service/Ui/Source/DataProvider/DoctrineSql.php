@@ -108,25 +108,10 @@ class DoctrineSql extends AbstractDataProvider
         $tableName = $connection->quoteIdentifier($this->definition->getEntityName());
         $conditions = $this->definition->getConditions();
 
-        if ($this->definition->getDateField() !== null) {
-            $dateField = $this->getSqlFieldName($this->definition->getDateField());
-            $period    = $this->request->getPeriod();
-            $dateFrom  = $connection->quote($dateFrom ?? $period->getDateFrom()->format('Y-m-d H:i:s'));
-            $dateTo    = $connection->quote($dateTo ?? $period->getDateTo()->format('Y-m-d H:i:s'));
-
-            $conditions[] = "$dateField >= $dateFrom";
-            $conditions[] = "$dateField < $dateTo";
-        }
+        $conditions = array_merge($conditions, $this->prepareQueryConditionPeriod($dateFrom, $dateTo));
 
         foreach ($this->getFilters() as $code => $value) {
-            $filter = $this->definition->getFilter($code);
-            $entityField = $this->getSqlFieldName($filter->getEntityField());
-
-            if ($filter->isMultiple() && !is_array($value)) {
-                $value = [$value];
-            }
-            $operator = ($filter->isMultiple() ? ' IN ' : ' = ');
-            $conditions[] = $entityField . $operator . $this->quoteValue($value);
+            $conditions[] = $this->prepareQueryConditionFilter($code, $value);
         }
 
         $select = [];
@@ -141,6 +126,49 @@ class DoctrineSql extends AbstractDataProvider
         }
 
         return $query;
+    }
+
+    protected function prepareQueryConditionPeriod(
+        ?string $dateFrom = null,
+        ?string $dateTo = null
+    ): array {
+        if ($this->definition->getDateField() === null) {
+            return [];
+        }
+
+        $connection = $this->entityManager->getConnection();
+
+        $dateField = $this->getSqlFieldName($this->definition->getDateField());
+        $period    = $this->request->getPeriod();
+        $dateFrom  = $connection->quote($dateFrom ?? $period->getDateFrom()->format('Y-m-d H:i:s'));
+        $dateTo    = $connection->quote($dateTo ?? $period->getDateTo()->format('Y-m-d H:i:s'));
+
+        $conditions = [];
+        $conditions[] = "$dateField >= $dateFrom";
+        $conditions[] = "$dateField < $dateTo";
+
+        return $conditions;
+    }
+
+    protected function prepareQueryConditionFilter(
+        string $code,
+        $value
+    ): string {
+        $filter = $this->definition->getFilter($code);
+        $entityField = $this->getSqlFieldName($filter->getEntityField());
+
+        if ($filter->isMultiple() && !is_array($value)) {
+            $value = [$value];
+        }
+
+        $closure = $filter->getSpecificSqlQueryFilterClosure();
+        if ($closure) {
+            $quoteFn = fn($rawValue) => $this->quoteValue($rawValue);
+            return $closure($quoteFn, $filter, $entityField, $value);
+        }
+
+        $operator = ($filter->isMultiple() ? ' IN ' : ' = ');
+        return $entityField . $operator . $this->quoteValue($value);
     }
 
     protected function executeQuery(string $query): array
