@@ -187,6 +187,7 @@ class DoctrineDql extends AbstractDataProvider
             return $closure($queryBuilder, $where, $filter, $entityField, $value);
         }
 
+        // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
         $expression = $filter->isMultiple()
             ? $queryBuilder->expr()->in($entityField, ':' . $code)
             : $queryBuilder->expr()->eq($entityField, ':' . $code)

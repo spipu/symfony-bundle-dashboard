@@ -204,7 +204,7 @@ class DoctrineSql extends AbstractDataProvider
 
         $closure = $filter->getSpecificSqlQueryFilterClosure();
         if ($closure) {
-            $quoteFn = fn($v) => $this->quoteValue($v);
+            $quoteFn = fn($rawValue) => $this->quoteValue($rawValue);
             return $closure($quoteFn, $filter, $entityField, $value);
         }
 
