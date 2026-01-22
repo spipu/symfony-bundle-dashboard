@@ -24,15 +24,7 @@ class SourceFilter
     private OptionsInterface $options;
     private bool $multiple = false;
     private bool $translate;
-
-    /**
-     * @var Closure|null
-     */
     private ?Closure $specificSqlQueryFilterClosure = null;
-
-    /**
-     * @var Closure|null
-     */
     private ?Closure $specificDqlQueryFilterClosure = null;
 
     /**
@@ -106,9 +98,6 @@ class SourceFilter
         return false;
     }
 
-    /**
-     * @return Closure|null
-     */
     public function getSpecificSqlQueryFilterClosure(): ?Closure
     {
         return $this->specificSqlQueryFilterClosure;
@@ -116,8 +105,6 @@ class SourceFilter
 
     /**
      * Format: function(callable $quote, SourceFilter $filter, string $entityField, $value): string
-     * @param Closure $specificSqlQueryFilterClosure
-     * @return $this
      */
     public function setSpecificSqlQueryFilterClosure(Closure $specificSqlQueryFilterClosure): SourceFilter
     {
@@ -125,9 +112,6 @@ class SourceFilter
         return $this;
     }
 
-    /**
-     * @return Closure|null
-     */
     public function getSpecificDqlQueryFilterClosure(): ?Closure
     {
         return $this->specificDqlQueryFilterClosure;
@@ -135,8 +119,6 @@ class SourceFilter
 
     /**
      * Format: function(QueryBuilder $qb, Expr\Andx $where, SourceFilter $filter, string $entityField, $value): array
-     * @param Closure $specificDqlQueryFilterClosure
-     * @return $this
      */
     public function setSpecificDqlQueryFilterClosure(Closure $specificDqlQueryFilterClosure): SourceFilter
     {
