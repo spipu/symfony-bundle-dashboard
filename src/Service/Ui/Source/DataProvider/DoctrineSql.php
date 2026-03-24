@@ -201,7 +201,7 @@ class DoctrineSql extends AbstractDataProvider
             return (string) $value;
         }
 
-        return $this->entityManager->getConnection()->quote($value);
+        return $this->entityManager->getConnection()->quote((string) $value);
     }
 
     protected function getSqlFieldName(string $field): string
