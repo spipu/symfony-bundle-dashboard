@@ -48,7 +48,6 @@ class DashboardShowManager implements DashboardShowManagerInterface
      */
     private array $widgetManagers = [];
 
-
     /**
      * @param Twig $twig
      * @param DashboardRouter $router

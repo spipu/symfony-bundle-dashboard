@@ -86,7 +86,7 @@ class SourceFilter
         return $this;
     }
 
-    public function isSelected($inputValue, $value): bool
+    public function isSelected(mixed $inputValue, mixed $value): bool
     {
         if (is_array($inputValue) && in_array($value, $inputValue, true)) {
             return true;
@@ -106,7 +106,7 @@ class SourceFilter
     /**
      * Format: function(callable $quote, SourceFilter $filter, string $entityField, $value): string
      */
-    public function setSpecificSqlQueryFilterClosure(Closure $specificSqlQueryFilterClosure): SourceFilter
+    public function setSpecificSqlQueryFilterClosure(Closure $specificSqlQueryFilterClosure): self
     {
         $this->specificSqlQueryFilterClosure = $specificSqlQueryFilterClosure;
         return $this;
@@ -120,7 +120,7 @@ class SourceFilter
     /**
      * Format: function(QueryBuilder $qb, Expr\Andx $where, SourceFilter $filter, string $entityField, $value): array
      */
-    public function setSpecificDqlQueryFilterClosure(Closure $specificDqlQueryFilterClosure): SourceFilter
+    public function setSpecificDqlQueryFilterClosure(Closure $specificDqlQueryFilterClosure): self
     {
         $this->specificDqlQueryFilterClosure = $specificDqlQueryFilterClosure;
         return $this;

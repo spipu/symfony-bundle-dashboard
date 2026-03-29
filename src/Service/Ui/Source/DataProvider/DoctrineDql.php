@@ -168,7 +168,6 @@ class DoctrineDql extends AbstractDataProvider
         return $parameters;
     }
 
-
     protected function getDqlFieldName(string $field): string
     {
         $prefix = '';

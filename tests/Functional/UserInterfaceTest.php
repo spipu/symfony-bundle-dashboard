@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spipu\DashboardBundle\Tests\Functional;
 
 use Spipu\CoreBundle\Tests\WebTestCase;
@@ -9,7 +11,7 @@ class UserInterfaceTest extends WebTestCase
 {
     use UiWebTestCaseTrait;
 
-    public function testMain()
+    public function testMain(): void
     {
         $client = static::createClient();
 

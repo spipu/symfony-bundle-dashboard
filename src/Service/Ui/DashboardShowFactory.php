@@ -28,7 +28,6 @@ class DashboardShowFactory
     private WidgetFactory $widgetFactory;
     private DashboardRequestFactory $dashboardRequestFactory;
 
-
     public function __construct(
         Twig $twig,
         DashboardRouter $router,

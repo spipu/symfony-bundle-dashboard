@@ -187,7 +187,6 @@ class WidgetManager implements WidgetManagerInterface
             $filterValues = [$filterValues];
         }
 
-
         return $filterValues;
     }
 }
