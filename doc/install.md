@@ -30,14 +30,42 @@ return [
 ];
 ```
 
-### 2. Import routes
+### 2. Create a dashboard controller
 
-In `config/routes.yaml`:
+The bundle does not provide its own routes. The application must create a controller that delegates to `DashboardControllerService`:
 
-```yaml
-spipu_dashboard:
-    resource: '@SpipuDashboardBundle/config/routes.yaml'
+```php
+namespace App\Controller;
+
+use App\Ui\AdminDashboard; // your DashboardDefinitionInterface implementation
+use Spipu\DashboardBundle\Entity\DashboardAcl;
+use Spipu\DashboardBundle\Service\DashboardControllerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+class DashboardController extends AbstractController
+{
+    #[Route(path: '/dashboard/{action}/{id?}', name: 'app_dashboard')]
+    public function main(
+        DashboardControllerService $service,
+        AdminDashboard $dashboard,
+        string $action = '',
+        ?int $id = null
+    ): Response {
+        $acl = (new DashboardAcl())->configure(
+            canSelect:    $this->isGranted('ROLE_ADMIN'),
+            canCreate:    $this->isGranted('ROLE_ADMIN'),
+            canConfigure: $this->isGranted('ROLE_ADMIN'),
+            canDelete:    $this->isGranted('ROLE_ADMIN'),
+        );
+
+        return $service->dispatch($dashboard, 'app_dashboard', $action, $id, $acl);
+    }
+}
 ```
+
+`AdminDashboard` must implement `DashboardDefinitionInterface` (see [Creating Widgets](./widgets.md)).
 
 ### 3. Install assets
 
@@ -47,14 +75,14 @@ php bin/console spipu:assets:install
 
 ### 4. Register your widget sources
 
-Tag services that implement both `SourceDefinitionInterface` and `SourceDataDefinitionInterface` with `spipu.dashboard.source`:
+Tag services that implement `SourceDefinitionInterface` with `spipu.widget.source`:
 
 ```yaml
 # config/services.yaml
 App\WidgetSource\:
     resource: '../src/WidgetSource/'
     tags:
-        - { name: spipu.dashboard.source }
+        - { name: spipu.widget.source }
 ```
 
 ## Admin UI
