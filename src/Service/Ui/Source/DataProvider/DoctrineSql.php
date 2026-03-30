@@ -176,7 +176,7 @@ class DoctrineSql extends AbstractDataProvider
         return $this->entityManager->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
 
-    protected function quoteValue($value): string
+    protected function quoteValue(mixed $value): string
     {
         if (is_array($value)) {
             foreach ($value as $subKey => $subValue) {
