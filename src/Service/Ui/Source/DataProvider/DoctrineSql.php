@@ -152,7 +152,7 @@ class DoctrineSql extends AbstractDataProvider
 
     protected function prepareQueryConditionFilter(
         string $code,
-        $value
+        mixed $value
     ): string {
         $filter = $this->definition->getFilter($code);
         $entityField = $this->getSqlFieldName($filter->getEntityField());

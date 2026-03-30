@@ -142,7 +142,7 @@ class DoctrineDql extends AbstractDataProvider
         QueryBuilder $queryBuilder,
         Andx $where,
         string $code,
-        $value
+        mixed $value
     ): array {
         $filter = $this->definition->getFilter($code);
         $entityField = $this->getDqlFieldName($filter->getEntityField());
