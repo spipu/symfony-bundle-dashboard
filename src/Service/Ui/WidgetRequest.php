@@ -79,7 +79,7 @@ class WidgetRequest extends AbstractRequest
         $this->setSessionValue('filters', $this->filters);
     }
 
-    public function getFilterValueString(string $key, string $subKey = null): string
+    public function getFilterValueString(string $key, ?string $subKey = null): string
     {
         if (!array_key_exists($key, $this->filters)) {
             return '';
@@ -104,7 +104,7 @@ class WidgetRequest extends AbstractRequest
         return $this->filters[$key][$subKey];
     }
 
-    public function getFilterValueArray(string $key, string $subKey = null): array
+    public function getFilterValueArray(string $key, ?string $subKey = null): array
     {
         if (!array_key_exists($key, $this->filters)) {
             return [];
