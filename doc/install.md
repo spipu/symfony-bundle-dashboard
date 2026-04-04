@@ -40,7 +40,7 @@ namespace App\Controller;
 use App\Ui\AdminDashboard; // your DashboardDefinitionInterface implementation
 use Spipu\DashboardBundle\Entity\DashboardAcl;
 use Spipu\DashboardBundle\Service\DashboardControllerService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Spipu\CoreBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
