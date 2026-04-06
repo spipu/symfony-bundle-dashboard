@@ -18,8 +18,8 @@ The **DashboardBundle** provides a widget-based dashboard system. Each widget is
 
 ## Requirements
 
-- PHP 8.1+
-- Symfony 6.4+
+- PHP >= 8.3
+- Symfony >= 7.4
 - `spipu/core-bundle`
 - `spipu/ui-bundle`
 

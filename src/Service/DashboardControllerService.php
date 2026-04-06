@@ -131,7 +131,8 @@ class DashboardControllerService extends AbstractController
         }
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $dashboardName = trim(strip_tags((string) $this->requestStack->getCurrentRequest()->get('dashboard_name')));
+        $dashboardName = (string) $this->requestStack->getCurrentRequest()->request->get('dashboard_name');
+        $dashboardName = trim(strip_tags($dashboardName));
         if (!$dashboardName) {
             $this->addFlashTrans('danger', 'spipu.dashboard.error.name_missing');
             return $this->redirect($this->buildUrl('show'));
@@ -223,7 +224,8 @@ class DashboardControllerService extends AbstractController
             throw new NotFoundHttpException('Unknown dashboard');
         }
 
-        $dashboardName = trim(strip_tags((string)$this->requestStack->getCurrentRequest()->get('dashboard_name')));
+        $dashboardName = (string) $this->requestStack->getCurrentRequest()->request->get('dashboard_name');
+        $dashboardName = trim(strip_tags($dashboardName));
         if (empty($dashboardName)) {
             $this->addFlashTrans('danger', 'spipu.dashboard.error.name_missing');
             return $this->redirect($this->buildUrl('show', $id));
@@ -262,7 +264,7 @@ class DashboardControllerService extends AbstractController
             }
 
             if ($this->dashboardService->canUpdateDashboard($dashboard, $user)) {
-                $name = trim(strip_tags($this->requestStack->getCurrentRequest()->get('name')));
+                $name = trim(strip_tags($this->requestStack->getCurrentRequest()->request->get('name')));
                 $dashboard->setName($name);
             }
 
@@ -315,7 +317,7 @@ class DashboardControllerService extends AbstractController
 
     protected function actionRefreshWidget(UserInterface $user, int $id): Response
     {
-        $identifier = $this->requestStack->getCurrentRequest()->get('identifier');
+        $identifier = $this->requestStack->getCurrentRequest()->query->get('identifier');
 
         $dashboard = $this->dashboardService->getDashboard($user, $id);
         if ($dashboard === null) {

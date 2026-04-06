@@ -48,7 +48,9 @@ class WidgetRequest extends AbstractRequest
     {
         $this->filters = $this->definition->getFilters();
         $this->filters = $this->getSessionValue('filters', $this->filters);
-        $this->filters = (array)$this->getCurrentRequest()->get(self::KEY_FILTERS, $this->filters);
+        if ($this->getCurrentRequest()->query->has(self::KEY_FILTERS)) {
+            $this->filters = $this->getCurrentRequest()->query->all(self::KEY_FILTERS);
+        }
 
         foreach ($this->filters as $key => $value) {
             $filter = $this->definition->getSource()->getFilter($key);

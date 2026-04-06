@@ -52,7 +52,7 @@ class DashboardRequest extends AbstractRequest
         try {
             $this->period = null;
             $this->period = $this->getSessionValue('period', $this->period);
-            $requestPeriod = (array) $this->getCurrentRequest()->get(self::KEY_PERIOD, []);
+            $requestPeriod = $this->getCurrentRequest()->query->all(self::KEY_PERIOD);
 
             // Keep session.
             if (empty($requestPeriod)) {

@@ -105,7 +105,7 @@ class DoctrineSql extends AbstractDataProvider
     ): string {
         $connection = $this->entityManager->getConnection();
 
-        $tableName = $connection->quoteIdentifier($this->definition->getEntityName());
+        $tableName = $connection->quoteSingleIdentifier($this->definition->getEntityName());
         $conditions = $this->definition->getConditions();
 
         $conditions = array_merge($conditions, $this->prepareQueryConditionPeriod($dateFrom, $dateTo));
