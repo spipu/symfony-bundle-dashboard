@@ -1,5 +1,5 @@
 <div class="card-header d-flex justify-content-between align-items-center {% if manager.definition.isTooSlow %}bg-warning{% endif %}">
     <span>{{ manager.widgetTitle }}</span>
-    {% if manager.definition.isTooSlow %}<i class="fa fa-exclamation-triangle" title="WARNING - the widget generation is too slow - {{ (manager.definition.generationTime / 1000)|number_format(1, '.', ' ') }} ms"></i>{% endif %}
+    {% if manager.definition.isTooSlow %}<i class="fa-solid fa-triangle-exclamation" title="WARNING - the widget generation is too slow - {{ (manager.definition.generationTime / 1000)|number_format(1, '.', ' ') }} ms"></i>{% endif %}
     {% include manager.definition.templateConfig with {'manager': manager} %}
 </div>

@@ -1,6 +1,6 @@
 {% if manager.definition.source.filters|length %}
     <button class="btn btn-default btn-sm btn-filter ms-2" data-bs-toggle="modal" data-bs-target="#modalConfiguration{{ manager.definition.id }}">
-        <i class="fas fa-filter {% if manager.request.filters|length > 0 %}text-danger{% endif %}"></i>
+        <i class="fa-solid fa-filter {% if manager.request.filters|length > 0 %}text-danger{% endif %}"></i>
     </button>
     <div class="modal" tabindex="-1" id="modalConfiguration{{ manager.definition.id }}">
         <div class="modal-dialog modal-lg">

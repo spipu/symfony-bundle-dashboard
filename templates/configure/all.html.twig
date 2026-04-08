@@ -7,7 +7,7 @@
     <div class="d-none d-md-flex justify-content-end mb-3">
         {{ buttons.back(back_url, 'spipu.ui.action.back', 'dashboard-back') }}
         <button id="dashboard-save" class="btn btn-outline-primary ms-2">
-            <i class="fas fa-edit"></i> {{ 'spipu.ui.action.save'|trans }}
+            <i class="fa-solid fa-pen-to-square"></i> {{ 'spipu.ui.action.save'|trans }}
         </button>
         {% if dashboard.name != constant('Spipu\\DashboardBundle\\Service\\DashboardService::DEFAULT_NAME') and dashboard_acl.canDelete %}
             <button
@@ -20,7 +20,7 @@
                     data-action-url="{{ delete_url }}"
                     title="{{ 'spipu.dashboard.dashboard.delete'|trans }}"
             >
-                <i class="fas fa-trash"></i> {{ 'spipu.ui.action.delete'|trans }}
+                <i class="fa-solid fa-trash"></i> {{ 'spipu.ui.action.delete'|trans }}
             </button>
         {% endif %}
     </div>
