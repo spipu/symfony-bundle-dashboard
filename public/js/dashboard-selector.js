@@ -12,10 +12,10 @@ class DashboardSelector {
     init() {
         let dashboardSelect = $('#dashboard-select');
 
-        dashboardSelect.on('change', $.proxy(function () {
+        dashboardSelect.on('change', function () {
             let id = dashboardSelect.val();
             this.reloadPageWithParam(id);
-        }, this));
+        }.bind(this));
     }
 
     reloadPageWithParam(id) {

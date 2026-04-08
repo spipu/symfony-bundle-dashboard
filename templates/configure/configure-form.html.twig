@@ -8,9 +8,9 @@
             <div class="form-options">
                 <div class="row" id="dashboard-configure-widget-fieldset-source">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dashboard-configure-widget-field-source">{{ 'spipu.dashboard.configure.field_source'|trans }}</label>
-                            <select id="dashboard-configure-widget-field-source" class="form-control">
+                            <select id="dashboard-configure-widget-field-source" class="form-select">
                                 {% for source in sources %}
                                     <option value="{{ source.code }}">{{ source.label }}</option>
                                 {% endfor %}
@@ -20,7 +20,7 @@
                 </div>
                 <div class="row" id="dashboard-configure-widget-fieldset-type">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dashboard-configure-widget-field-type" class="mb-1">{{ 'spipu.dashboard.configure.field_type'|trans }}</label>
                             <input type="hidden" id="dashboard-configure-widget-field-type"/>
                             <div class="type-selector-container" id="dashboard-configure-widget-field-type-selector">
@@ -53,9 +53,9 @@
                 </div>
                 <div class="row" id="dashboard-configure-widget-fieldset-period">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dashboard-configure-widget-field-period">{{ 'spipu.dashboard.configure.field_period'|trans }}</label>
-                            <select id="dashboard-configure-widget-field-period" class="form-control">
+                            <select id="dashboard-configure-widget-field-period" class="form-select">
                                 {% for period in periods %}
                                     <option value="{{ period.code }}">{{ period.label }}</option>
                                 {% endfor %}
@@ -65,7 +65,7 @@
                 </div>
                 <div class="row" id="dashboard-configure-widget-fieldset-width">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dashboard-configure-widget-field-width"
                                    class="mb-1">{{ 'spipu.dashboard.configure.field_width'|trans }}</label>
                             <input type="hidden" id="dashboard-configure-widget-field-width"/>
@@ -173,7 +173,7 @@
                 </div>
                 <div class="row" id="dashboard-configure-widget-fieldset-height">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dashboard-configure-widget-field-height"
                                    class="mb-1">{{ 'spipu.dashboard.configure.field_height'|trans }}</label>
                             <input type="hidden" id="dashboard-configure-widget-field-height"/>
@@ -214,7 +214,7 @@
                 </div>
                 <div class="row" id="dashboard-configure-widget-fieldset-filters">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <form id="dashboard-configure-widget-filters-form"></form>
                         </div>
                     </div>

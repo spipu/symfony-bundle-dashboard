@@ -1,9 +1,9 @@
 <a
         id="duplicate-dashboard-button"
-        data-toggle="modal"
-        data-target="#duplicateDashboardNameModal"
+        data-bs-toggle="modal"
+        data-bs-target="#duplicateDashboardNameModal"
         role="button"
-        class="mt-1 ml-1 pointer d-none d-md-inline-block text-primary"
+        class="mt-1 ms-1 pointer d-none d-md-inline-block text-primary"
 >
     <i class="fas fa-copy"></i>
     {{ 'spipu.dashboard.dashboard.duplicate'|trans }}
@@ -18,14 +18,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-center">{{ 'spipu.dashboard.dashboard.duplicate'|trans }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post"
                       action="{{ manager.router.url('duplicate') }}">
-                    <fieldset class="form-group">
+                    <fieldset class="mb-3">
                         <label for="dashboardModalName">{{ 'spipu.dashboard.label.label_dashboard_name'|trans }}</label>
                         <input type="text"
                                name="dashboard_name"
@@ -40,7 +38,7 @@
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-edit"></i> {{ 'spipu.dashboard.ui.action.duplicate'|trans }}
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                             <i class="fas fa-undo-alt"></i> {{ 'spipu.ui.action.back'|trans }}
                         </button>
                     </div>

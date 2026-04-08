@@ -19,7 +19,7 @@ class WidgetConfiguration {
 
     periodFormInit()
     {
-        $('#dp_type').on('change', $.proxy(this.periodFormOnChange, this));
+        $('#dp_type').on('change', this.periodFormOnChange.bind(this));
         this.periodFormOnChange();
     }
 

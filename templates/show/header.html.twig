@@ -1,17 +1,15 @@
-<div class="form-group row">
+<div class="mb-3 row">
     <div class="col-12 col-md-5 mb-2 mb-md-0">
         <div class="input-group">
             {% if manager.acl.canSelect %}
-                <select id="dashboard-select" class="form-control">
+                <select id="dashboard-select" class="form-select">
                     {% for row in manager.dashboards %}
                         <option value="{{ row.id }}" {{ row.id is same as(manager.resource.id) ? 'selected' : '' }}>{{ row.name }}</option>
                     {% endfor %}
                 </select>
             {% endif %}
             {% if manager.acl.canConfigure %}
-                <div class="input-group-append">
-                    {% include "@SpipuDashboard/show/header/configuration.html.twig" with {'manager': manager} %}
-                </div>
+                {% include "@SpipuDashboard/show/header/configuration.html.twig" with {'manager': manager} %}
             {% endif %}
         </div>
         {% if manager.acl.canCreate %}

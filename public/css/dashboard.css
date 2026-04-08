@@ -13,7 +13,7 @@
   font-size: 24px;
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--info);
+  color: var(--bs-info);
   margin-bottom: 30px;
 }
 .dashboard-container .dashboard-view .tile-row {
@@ -154,14 +154,14 @@
   width: calc(100% + 30px);
 }
 .dashboard-container .dashboard-configuration .widget-item:hover .card, .dashboard-container .dashboard-configuration .widget-item.widget-item-selected .card {
-  color: var(--info);
-  border-color: var(--info);
+  color: var(--bs-info);
+  border-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .widget-item:hover .card .type-icon, .dashboard-container .dashboard-configuration .widget-item.widget-item-selected .card .type-icon {
-  border-color: var(--info);
+  border-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .widget-item:hover .card .type-icon.value-single span, .dashboard-container .dashboard-configuration .widget-item.widget-item-selected .card .type-icon.value-single span {
-  background-color: var(--info);
+  background-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .widget-item.widget-item-empty .card {
   border-width: 2px;
@@ -219,7 +219,7 @@
   height: 40px;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--bs-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,7 +228,7 @@
   font-size: 13px;
   line-height: 12px;
   color: white;
-  background-color: var(--secondary);
+  background-color: var(--bs-secondary);
   font-weight: bold;
   border-radius: 3px;
   padding: 3px;
@@ -261,14 +261,14 @@
   right: 0;
 }
 .dashboard-container .dashboard-configuration .widget-item .card.border-danger .type-icon, .dashboard-container .dashboard-configuration .widget-item .card.border-success .type-icon {
-  color: var(--secondary);
-  border-color: var(--secondary);
+  color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
 }
 .dashboard-container .dashboard-configuration .widget-item .card.border-danger .type-icon.value-single span, .dashboard-container .dashboard-configuration .widget-item .card.border-success .type-icon.value-single span {
-  background-color: var(--secondary);
+  background-color: var(--bs-secondary);
 }
 .dashboard-container .dashboard-configuration .widget-item .card.border-danger .widget-title, .dashboard-container .dashboard-configuration .widget-item .card.border-success .widget-title {
-  color: var(--secondary);
+  color: var(--bs-secondary);
 }
 .dashboard-container .dashboard-configuration .nav-options {
   position: absolute;
@@ -312,13 +312,13 @@
 .dashboard-container .dashboard-configuration .add-row-select-item .card .col-item {
   height: 40px;
   border-radius: 5px;
-  background-color: var(--secondary);
+  background-color: var(--bs-secondary);
 }
 .dashboard-container .dashboard-configuration .add-row-select-item:hover .card {
-  border-color: var(--info);
+  border-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .add-row-select-item:hover .card .col-item {
-  background-color: var(--info);
+  background-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form {
   width: 300px;
@@ -354,7 +354,7 @@
   height: 40px;
   padding: 5px;
   border-radius: 5px;
-  color: var(--secondary);
+  color: var(--bs-secondary);
   border: 1px solid #a0a0a0;
   display: flex;
   align-items: center;
@@ -363,21 +363,21 @@
   cursor: pointer;
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector:hover, .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector.selected {
-  border-color: var(--info);
-  color: var(--info);
+  border-color: var(--bs-info);
+  color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector.value-single span {
   font-size: 13px;
   line-height: 12px;
   color: white;
-  background-color: var(--secondary);
+  background-color: var(--bs-secondary);
   font-weight: bold;
   border-radius: 3px;
   padding: 3px;
   display: inline-block;
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector.value-single:hover span, .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector.value-single.selected span {
-  background-color: var(--info);
+  background-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .type-selector-container .type-selector-item .type-selector.value-compare {
   font-size: 13px;
@@ -419,7 +419,7 @@
   height: 40px;
   padding: 5px;
   border-radius: 3px;
-  color: var(--secondary);
+  color: var(--bs-secondary);
   border: 1px solid #a0a0a0;
   cursor: pointer;
 }
@@ -436,28 +436,28 @@
   padding-top: 2px;
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .width-selector .selector-item .col-item, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .height-selector .selector-item .col-item {
-  background-color: var(--secondary);
+  background-color: var(--bs-secondary);
   width: 100%;
   height: 100%;
   border-radius: 5px;
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .width-selector:hover, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .height-selector:hover, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .width-selector.selected, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .height-selector.selected {
-  border-color: var(--info);
+  border-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .width-selector:hover .col-item, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .height-selector:hover .col-item, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .width-selector.selected .col-item, .dashboard-container .dashboard-configuration .dashboard-configure-form .size-selector-container .height-selector.selected .col-item {
-  background-color: var(--info);
+  background-color: var(--bs-info);
 }
 .dashboard-container .dashboard-configuration .dashboard-row-dragged-over {
   padding-bottom: 20px;
-  border-bottom: 2px solid var(--success);
+  border-bottom: 2px solid var(--bs-success);
 }
 .dashboard-container .dashboard-configuration .dashboard-row-dragged-over.dashboard-main-name {
   padding-bottom: 0;
   margin-bottom: 20px;
 }
 .dashboard-container .dashboard-configuration .dashboard-col-dragged-over-before {
-  border-left: 2px solid var(--success);
+  border-left: 2px solid var(--bs-success);
 }
 .dashboard-container .dashboard-configuration .dashboard-col-dragged-over-after {
-  border-right: 2px solid var(--success);
+  border-right: 2px solid var(--bs-success);
 }

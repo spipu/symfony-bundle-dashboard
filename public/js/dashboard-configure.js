@@ -44,29 +44,29 @@ class DashboardConfigure {
             $('#dashboard-name-noform').hide();
             let inputName = $('#dashboard-name-field');
             inputName.val(this.dashboardName);
-            inputName.on('change', $.proxy(function () {
+            inputName.on('change', function () {
                 this.dashboardName = inputName.val();
-            }, this));
-            inputName.on('keyup', $.proxy(function () {
+            }.bind(this));
+            inputName.on('keyup', function () {
                 this.dashboardName = inputName.val();
-            }, this));
+            }.bind(this));
         }
 
-        $('#dashboard-save').on('click', $.proxy(this.dashboardSave, this));
-        $('#dashboard-back').on('click', $.proxy(this.dashboardBack, this));
-        $('#dashboard-add-row-button-add').show().on('click', $.proxy(this.rowToggleSelect, this));
-        $('#dashboard-add-row-button-cancel').hide().on('click', $.proxy(this.rowToggleSelect, this));
+        $('#dashboard-save').on('click', this.dashboardSave.bind(this));
+        $('#dashboard-back').on('click', this.dashboardBack.bind(this));
+        $('#dashboard-add-row-button-add').show().on('click', this.rowToggleSelect.bind(this));
+        $('#dashboard-add-row-button-cancel').hide().on('click', this.rowToggleSelect.bind(this));
         $('#dashboard-add-row-select').hide();
-        $('#dashboard-add-row-select-3').on('click', $.proxy(function () {
+        $('#dashboard-add-row-select-3').on('click', function () {
             this.rowAddManual(3);
-        }, this));
-        $('#dashboard-add-row-select-4').on('click', $.proxy(function () {
+        }.bind(this));
+        $('#dashboard-add-row-select-4').on('click', function () {
             this.rowAddManual(4);
-        }, this));
+        }.bind(this));
 
         $('.dashboard-row')
-            .on('dragover', $.proxy(this.rowMoveEventDragOver, this))
-            .on('drop', $.proxy(this.rowMoveEventDrop, this))
+            .on('dragover', this.rowMoveEventDragOver.bind(this))
+            .on('drop', this.rowMoveEventDrop.bind(this))
         ;
 
         this.widgetFormInit();
@@ -101,10 +101,10 @@ class DashboardConfigure {
         );
 
         popup.addCallbackConfirm(
-            $.proxy(function () {
+            function () {
                 popup.close();
                 window.location = $('#dashboard-back').attr('href');
-            }, this)
+            }.bind(this)
         );
 
         return false;
@@ -217,52 +217,52 @@ class DashboardConfigure {
         htmlRow.find('label').attr('for', 'dashboard-row-' + rowId + '-title');
         htmlRow.find('input').attr('id', 'dashboard-row-' + rowId + '-title');
 
-        htmlRow.on('drag', $.proxy(this.rowMoveEventDrag, this));
-        htmlRow.on('dragover', $.proxy(this.rowMoveEventDragOver, this));
-        htmlRow.on('drop', $.proxy(this.rowMoveEventDrop, this));
+        htmlRow.on('drag', this.rowMoveEventDrag.bind(this));
+        htmlRow.on('dragover', this.rowMoveEventDragOver.bind(this));
+        htmlRow.on('drop', this.rowMoveEventDrop.bind(this));
 
         htmlRow.find('.dashboard-icon-delete')
             .attr('id', 'dashboard-row-' + rowId + '-delete')
-            .on('mouseenter', $.proxy(function () {
+            .on('mouseenter', function () {
                 this.rowActionEnter(rowId, 'delete', 'danger');
-            }, this))
-            .on('mouseleave', $.proxy(function () {
+            }.bind(this))
+            .on('mouseleave', function () {
                 this.rowActionLeave(rowId, 'delete', 'danger');
-            }, this))
-            .on('click', $.proxy(function () {
+            }.bind(this))
+            .on('click', function () {
                 this.rowDelete(rowId);
-            }, this))
+            }.bind(this))
         ;
 
         htmlRow.find('.dashboard-icon-clone')
             .attr('id', 'dashboard-row-' + rowId + '-clone')
-            .on('mouseenter', $.proxy(function () {
+            .on('mouseenter', function () {
                 this.rowActionEnter(rowId, 'clone', 'primary');
-            }, this))
-            .on('mouseleave', $.proxy(function () {
+            }.bind(this))
+            .on('mouseleave', function () {
                 this.rowActionLeave(rowId, 'clone', 'primary');
-            }, this))
-            .on('click', $.proxy(function () {
+            }.bind(this))
+            .on('click', function () {
                 this.rowClone(rowId);
-            }, this))
+            }.bind(this))
         ;
 
         htmlRow.find('.dashboard-icon-move')
             .attr('id', 'dashboard-row-' + rowId + '-move')
-            .on('mouseenter', $.proxy(function () {
+            .on('mouseenter', function () {
                 this.rowActionEnterMove(rowId);
-            }, this))
-            .on('mouseleave', $.proxy(function () {
+            }.bind(this))
+            .on('mouseleave', function () {
                 this.rowActionLeaveMove(rowId);
-            }, this))
+            }.bind(this))
         ;
 
-        htmlRow.find('input').on('change', $.proxy(function () {
+        htmlRow.find('input').on('change', function () {
             this.updateRowTitle(rowId);
-        }, this));
-        htmlRow.find('input').on('keyup', $.proxy(function () {
+        }.bind(this));
+        htmlRow.find('input').on('keyup', function () {
             this.updateRowTitle(rowId);
-        }, this));
+        }.bind(this));
 
         for (let colId = 0; colId < nbCol; colId++) {
             let contentCol = {
@@ -277,9 +277,9 @@ class DashboardConfigure {
             htmlCol.data('row-id', rowId);
             htmlCol.data('col-id', colId);
 
-            htmlCol.on('drag', $.proxy(this.widgetMoveEventDrag, this));
-            htmlCol.on('dragover', $.proxy(this.widgetMoveEventDragOver, this));
-            htmlCol.on('drop', $.proxy(this.widgetMoveEventDrop, this));
+            htmlCol.on('drag', this.widgetMoveEventDrag.bind(this));
+            htmlCol.on('dragover', this.widgetMoveEventDragOver.bind(this));
+            htmlCol.on('drop', this.widgetMoveEventDrop.bind(this));
 
             let htmlWidgetEmpty = this.widgetPrepareEmptyHtml(rowId, colId, 0, 2);
             htmlCol.append(htmlWidgetEmpty);
@@ -305,9 +305,9 @@ class DashboardConfigure {
 
         htmlWidgetEmpty.attr('id', this.widgetGetId(rowId, colId, widgetId));
         htmlWidgetEmpty.addClass(this.getWidgetCssHeight(height));
-        htmlWidgetEmpty.on('click', $.proxy(function () {
+        htmlWidgetEmpty.on('click', function () {
             this.currentWidgetSet(rowId, colId, widgetId);
-        }, this));
+        }.bind(this));
 
         return htmlWidgetEmpty;
     }
@@ -330,11 +330,11 @@ class DashboardConfigure {
 
     widgetFormInit()
     {
-        $('#dashboard-configure-widget-field-source').on('change', $.proxy(this.widgetFormSelectSourceChange, this));
-        $('#dashboard-configure-widget-field-type-selector').find('div.type-selector').on('click', $.proxy(this.widgetFormSelectType, this));
-        $('#dashboard-configure-widget-field-width-selector').find('div.width-selector').on('click', $.proxy(this.widgetFormSelectWidth, this));
-        $('#dashboard-configure-widget-field-height-selector').find('div.height-selector').on('click', $.proxy(this.widgetFormSelectHeight, this));
-        $('#dashboard-configure-widget-save').on('click', $.proxy(this.widgetSaveForm, this));
+        $('#dashboard-configure-widget-field-source').on('change', this.widgetFormSelectSourceChange.bind(this));
+        $('#dashboard-configure-widget-field-type-selector').find('div.type-selector').on('click', this.widgetFormSelectType.bind(this));
+        $('#dashboard-configure-widget-field-width-selector').find('div.width-selector').on('click', this.widgetFormSelectWidth.bind(this));
+        $('#dashboard-configure-widget-field-height-selector').find('div.height-selector').on('click', this.widgetFormSelectHeight.bind(this));
+        $('#dashboard-configure-widget-save').on('click', this.widgetSaveForm.bind(this));
 
         this.widgetFormHide();
     }
@@ -492,36 +492,34 @@ class DashboardConfigure {
         }
         htmlWidget.find('.widget-title').html(title);
 
-        htmlWidget.on('click', $.proxy(function () {
+        htmlWidget.on('click', function () {
             this.currentWidgetSet(rowId, colId, widgetId);
-        }, this));
+        }.bind(this));
 
         htmlWidget.find('.dashboard-icon-delete')
-            .on('mouseenter', $.proxy(function () {
+            .on('mouseenter', function () {
                 this.widgetActionEnter(rowId, colId, widgetId, 'delete', 'danger');
-            }, this))
-            .on('mouseleave', $.proxy(function () {
+            }.bind(this))
+            .on('mouseleave', function () {
                 this.widgetActionLeave(rowId, colId, widgetId, 'delete', 'danger');
-            }, this))
-            .on('click', $.proxy(
-                function (event) {
+            }.bind(this))
+            .on('click', function (event) {
                     event.stopPropagation();
                     this.widgetDelete(rowId, colId, widgetId);
-                },
-                this
-            ))
+                }.bind(this)
+            )
         ;
 
         if (widgetId > 0) {
             htmlWidget.find('.dashboard-icon-move').remove();
         } else {
             htmlWidget.find('.dashboard-icon-move')
-                .on('mouseenter', $.proxy(function () {
+                .on('mouseenter', function () {
                     this.widgetActionEnterMove(rowId, colId, widgetId);
-                }, this))
-                .on('mouseleave', $.proxy(function () {
+                }.bind(this))
+                .on('mouseleave', function () {
                     this.widgetActionLeaveMove(rowId, colId, widgetId);
-                }, this))
+                }.bind(this))
             ;
         }
 
@@ -602,7 +600,7 @@ class DashboardConfigure {
 
         let widthSelectors = $('#dashboard-configure-widget-field-width-selector .width-selector');
         widthSelectors.each(
-            $.proxy(function (key) {
+            function (key) {
                 let widthSelector = $(widthSelectors[key]);
                 let widthValue = widthSelector.data('value');
                 if (widthValue < this.currentWidget.params.minWidth || widthValue > this.currentWidget.params.maxWidth) {
@@ -610,7 +608,7 @@ class DashboardConfigure {
                 } else {
                     widthSelector.show();
                 }
-            }, this)
+            }.bind(this)
         );
         if (this.currentWidget.params.minWidth === this.currentWidget.params.maxWidth) {
             $('#dashboard-configure-widget-fieldset-width').hide();
@@ -641,11 +639,11 @@ class DashboardConfigure {
         form.empty();
         for (let filterKey of Object.keys(source.filters)) {
             let filter = source.filters[filterKey];
-            let formGroup = $('<div>').addClass('form-group');
+            let formGroup = $('<div>').addClass('mb-3');
             let formLabel = window.translator.trans('spipu.dashboard.configure.field_filters') + ' - ' + filter.name;
 
 
-            let input = $(`<select id="dashboard-configure-widget-filters-field-${filterKey}" >`).addClass('form-control');
+            let input = $(`<select id="dashboard-configure-widget-filters-field-${filterKey}" >`).addClass('form-select');
             if (filter.multiple) {
                 input.attr('multiple', true);
             } else {
@@ -951,21 +949,21 @@ class DashboardConfigure {
         );
 
         popup.addCallbackConfirm(
-            $.proxy(function () {
+            function () {
                 popup.close();
                 this.widgetDeleteConfirm(rowId, colId, widgetId);
-            }, this)
+            }.bind(this)
         );
 
         popup.addCallbackCancel(
-            $.proxy(function () {
+            function () {
                 this.widgetActionLeave(rowId, colId, widgetId, 'delete', 'danger');
-            }, this)
+            }.bind(this)
         );
 
-        setTimeout($.proxy(function () {
+        setTimeout(function () {
             this.widgetActionEnter(rowId, colId, widgetId, 'delete', 'danger');
-        }, this), 0);
+        }.bind(this), 0);
     }
 
     widgetDeleteConfirm(rowId, colId, widgetId)
@@ -1183,21 +1181,21 @@ class DashboardConfigure {
         );
 
         popup.addCallbackConfirm(
-            $.proxy(function () {
+            function () {
                 popup.close();
                 this.rowDeleteConfirm(rowId);
-            }, this)
+            }.bind(this)
         );
 
         popup.addCallbackCancel(
-            $.proxy(function () {
+            function () {
                 this.rowActionLeave(rowId, 'delete', 'danger');
-            }, this)
+            }.bind(this)
         );
 
-        setTimeout($.proxy(function () {
+        setTimeout(function () {
             this.rowActionEnter(rowId, 'delete', 'danger');
-        }, this), 0);
+        }.bind(this), 0);
     }
 
     rowDeleteConfirm(rowId)
@@ -1226,21 +1224,21 @@ class DashboardConfigure {
         );
 
         popup.addCallbackConfirm(
-            $.proxy(function () {
+            function () {
                 popup.close();
                 this.rowCloneConfirm(rowId);
-            }, this)
+            }.bind(this)
         );
 
         popup.addCallbackCancel(
-            $.proxy(function () {
+            function () {
                 this.rowActionLeave(rowId, 'clone', 'primary');
-            }, this)
+            }.bind(this)
         );
 
-        setTimeout($.proxy(function () {
+        setTimeout(function () {
             this.rowActionEnter(rowId, 'clone', 'primary');
-        }, this), 0);
+        }.bind(this), 0);
     }
 
     rowCloneConfirm(rowId)
@@ -1387,7 +1385,7 @@ class DashboardConfigure {
                 name: this.dashboardName,
                 configurations: JSON.stringify(this.dashboardContent)
             },
-            success: $.proxy(function (data) {
+            success: function (data) {
                 if (data.status === 'ok') {
                     this.dashboardResetSave();
                     this.displayMessageSuccess(window.translator.trans('spipu.dashboard.flash_alert_message.success_saved'));
@@ -1395,10 +1393,10 @@ class DashboardConfigure {
                 if (data.status === 'ko') {
                     this.displayMessageError(data.message);
                 }
-            }, this),
-            error: $.proxy(function () {
+            }.bind(this),
+            error: function () {
                 this.displayMessageError('Internal error');
-            }, this),
+            }.bind(this),
         });
     }
 

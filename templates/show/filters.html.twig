@@ -14,7 +14,7 @@
     <div class="dropdown">
         <button class="btn btn-outline-{{ color }} dropdown-toggle"
                 type="button"
-                data-toggle="dropdown"
+                data-bs-toggle="dropdown"
                 aria-expanded="false">
             <i class="far fa-calendar-alt"></i> {{ 'spipu.dashboard.configuration.period.title'|trans }}
         </button>
@@ -22,9 +22,9 @@
             <form class="px-4 py-3" method="get">
                 <div class="row">
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dp_type">{{ 'spipu.dashboard.configuration.period.presets'|trans }}</label>
-                            <select class="form-control" name="dp[type]" id="dp_type">
+                            <select class="form-select" name="dp[type]" id="dp_type">
                                 <option value="">---</option>
                                 {% for period in manager.periods %}
                                     <option value="{{ period.code }}" {% if (period.code == type) %}selected{% endif %}>{{ period.label }}</option>
@@ -34,19 +34,19 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dp_from">{{ 'spipu.dashboard.configuration.period.from'|trans }}</label>
                             <input type="datetime-local" class="form-control" id="dp_from" name="dp[from]" value="{{ from }}">
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="dp_to">{{ 'spipu.dashboard.configuration.period.to'|trans }}</label>
                             <input type="datetime-local" class="form-control" id="dp_to" name="dp[to]" value="{{ to }}">
                         </div>
                     </div>
                     <div class="col-12 text-nowrap">
-                        <a href="{{ manager.router.resetUrl }}" class="btn btn-outline-secondary mr-2" style="min-width: 100px !important;">{{ 'spipu.dashboard.configuration.action.reset'|trans }}</a>
+                        <a href="{{ manager.router.resetUrl }}" class="btn btn-outline-secondary me-2" style="min-width: 100px !important;">{{ 'spipu.dashboard.configuration.action.reset'|trans }}</a>
                         <button type="submit" class="btn btn-primary text-no" style="min-width: 100px !important;">{{ 'spipu.dashboard.configuration.action.apply_period'|trans }}</button>
                     </div>
                 </div>

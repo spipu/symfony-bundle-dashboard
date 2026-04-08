@@ -6,7 +6,7 @@
         {% if filter.multiple %}
             {% set input_name = input_name ~ '[]' %}
         {% endif %}
-        <select class="form-control form-control-sm col-12" id="{{ input_id }}" name="{{ input_name }}"
+        <select class="form-select form-select-sm col-12" id="{{ input_id }}" name="{{ input_name }}"
                 {% if  filter.multiple %}multiple{% endif %}>
             {% if not filter.multiple %}
                 <option value=""> - - - - -</option>

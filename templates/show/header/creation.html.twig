@@ -1,11 +1,11 @@
 <a
         id="create-dashboard-button"
-        data-toggle="modal"
-        data-target="#createDashboardNameModal"
+        data-bs-toggle="modal"
+        data-bs-target="#createDashboardNameModal"
         role="button"
-        class="mt-1 ml-1 pointer d-none d-md-inline-block text-primary"
+        class="mt-1 ms-1 pointer d-none d-md-inline-block text-primary"
 >
-    <i class="fas fa-plus mr-1"></i>
+    <i class="fas fa-plus me-1"></i>
     {{ 'spipu.dashboard.dashboard.create'|trans }}
 </a>
 <div class="modal fade"
@@ -18,13 +18,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-center">{{ 'spipu.dashboard.dashboard.create'|trans }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" action="{{ manager.router.url('create') }}">
-                    <fieldset class="form-group">
+                    <fieldset class="mb-3">
                         <label for="dashboardModalName">{{ 'spipu.dashboard.label.label_dashboard_name'|trans }}</label>
                         <input type="text"
                                name="dashboard_name"
@@ -38,7 +36,7 @@
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-plus"></i> {{ 'spipu.ui.action.create'|trans }}
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                             <i class="fas fa-undo-alt"></i> {{ 'spipu.ui.action.back'|trans }}
                         </button>
                     </div>
