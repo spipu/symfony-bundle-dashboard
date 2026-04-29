@@ -708,17 +708,17 @@ class DashboardConfigure {
             $("#type-specific").hide();
         }
 
+        let availableTypes = (this.sources[value] && this.sources[value].availableTypes) || [];
+
         let previousType = $('#dashboard-configure-widget-field-type').val();
         for (let type in this.types) {
             if (
-                (specificDisplay && type !== 'specific')
-                || (!specificDisplay && type === 'specific')
-                || (this.types[type].needPeriod && !needPeriod)
-                || (this.types[type].height > this.currentWidget.params.maxHeight)
+                (this.types[type].height > this.currentWidget.params.maxHeight)
+                || (availableTypes.indexOf(type) === -1)
             ) {
                 $('#type-' + type).hide();
                 if (previousType === type) {
-                    this.widgetFormSelectTypeValue(specificDisplay ? 'specific' : 'value_single');
+                    this.widgetFormSelectTypeValue(availableTypes[0] || 'value_single');
                 }
             } else {
                 $('#type-' + type).show();

@@ -27,6 +27,7 @@ abstract class Source
     private bool $lowerBetter = false;
     private ?string $specificDisplayIcon = null;
     private ?string $specificDisplayTemplate = null;
+    private bool $donutDisplay = false;
 
     /**
      * @var string[]
@@ -214,6 +215,18 @@ abstract class Source
     public function getSpecificDisplayTemplate(): ?string
     {
         return $this->specificDisplayTemplate;
+    }
+
+    public function setDonutDisplay(bool $enabled = true): self
+    {
+        $this->donutDisplay = $enabled;
+
+        return $this;
+    }
+
+    public function hasDonutDisplay(): bool
+    {
+        return $this->donutDisplay;
     }
 
     public function needPeriod(): bool

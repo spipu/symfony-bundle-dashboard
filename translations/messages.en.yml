@@ -91,6 +91,7 @@ spipu:
       value_single: "Single value"
       value_compare: "Compare values"
       graph: "Graph"
+      donut: "Donut"
       specific: "Specific"
 
     source:

@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Spipu\DashboardBundle\Service;
 
 use Spipu\DashboardBundle\Entity\Source\Source;
+use Spipu\DashboardBundle\Entity\Source\SourceFromDefinition;
 use Spipu\DashboardBundle\Exception\TypeException;
+use Spipu\DashboardBundle\Service\Ui\Source\DataProvider\FromSourceDefinition;
 use Spipu\DashboardBundle\Service\Ui\SourceManager;
 use Spipu\DashboardBundle\Service\Ui\WidgetManager;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -24,18 +26,25 @@ class WidgetTypeService
     public const TYPE_VALUE_SINGLE = 'value_single';
     public const TYPE_VALUE_COMPARE = 'value_compare';
     public const TYPE_GRAPH = 'graph';
+    public const TYPE_DONUT = 'donut';
     public const TYPE_SPECIFIC = 'specific';
 
     private array $types = [
         self::TYPE_VALUE_SINGLE,
         self::TYPE_VALUE_COMPARE,
         self::TYPE_GRAPH,
+        self::TYPE_DONUT,
         self::TYPE_SPECIFIC,
     ];
 
     private array $typesWithoutPeriod = [
         self::TYPE_VALUE_SINGLE,
+        self::TYPE_DONUT,
         self::TYPE_SPECIFIC,
+    ];
+
+    private array $typesRequiringSourceDefinition = [
+        self::TYPE_DONUT,
     ];
 
     private SourceManager $sourceManager;
@@ -109,6 +118,9 @@ class WidgetTypeService
             case self::TYPE_GRAPH:
                 $widget->setValues($this->getValuesTypeValues($widgetManager));
                 break;
+            case self::TYPE_DONUT:
+                $widget->setValues($this->getValuesTypeDonut($widgetManager));
+                break;
             case self::TYPE_SPECIFIC:
                 $widget->setValues($this->getValuesTypeSpecific($widgetManager));
                 break;
@@ -161,8 +173,30 @@ class WidgetTypeService
         return $widgetManager->getDataProvider()->getSpecificValues();
     }
 
+    private function getValuesTypeDonut(WidgetManager $widgetManager): array
+    {
+        $dataProvider = $widgetManager->getDataProvider();
+        if (!($dataProvider instanceof FromSourceDefinition)) {
+            throw new TypeException('the donut type requires a SourceFromDefinition data provider');
+        }
+
+        return $dataProvider->getSpecificValues();
+    }
+
     public function getAvailableWidgetTypes(Source $source): array
     {
-        return $source->getDateField() === null ? $this->typesWithoutPeriod : $this->types;
+        if ($source instanceof SourceFromDefinition && $source->hasDonutDisplay()) {
+            return [self::TYPE_DONUT];
+        }
+
+        if ($source->hasSpecificDisplay()) {
+            return [self::TYPE_SPECIFIC];
+        }
+
+        $availableTypes = ($source->getDateField() === null ? $this->typesWithoutPeriod : $this->types);
+
+        return array_values(
+            array_diff($availableTypes, $this->typesRequiringSourceDefinition, [self::TYPE_SPECIFIC])
+        );
     }
 }

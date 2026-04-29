@@ -1,0 +1,16 @@
+<div class="widget-content value-donut card-body w-100 h-100 text-center" id="widget_{{ manager.definition.id }}_donut">
+    loading
+</div>
+<script>
+    function initWidget_{{ manager.definition.id }}()
+    {
+        new SpipuGraphDonut(
+            'widget_{{ manager.definition.id }}_donut',
+            {{ manager.definition.values|json_encode|raw }}
+        );
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        initWidget_{{ manager.definition.id }}();
+    });
+</script>

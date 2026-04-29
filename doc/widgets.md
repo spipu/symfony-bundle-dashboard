@@ -19,6 +19,20 @@ The bundle provides three concrete `Source` subclasses to choose from:
 | `SourceDql` | Doctrine ORM (DQL) | Count/sum on a mapped entity |
 | `SourceFromDefinition` | Custom PHP class | Any data source (API, file, complex query…) |
 
+## Widget Types
+
+A widget is rendered using one of five visualization types. The list of types available for a given source is computed by `WidgetTypeService::getAvailableWidgetTypes()` and exposed to the configuration UI.
+
+| Type | Constant | Height | Source must have | Notes |
+|------|----------|--------|------------------|-------|
+| `value_single` | `WidgetTypeService::TYPE_VALUE_SINGLE` | 1 | — | A single number, period optional |
+| `value_compare` | `WidgetTypeService::TYPE_VALUE_COMPARE` | 1 | `dateField` | Current vs previous period |
+| `graph` | `WidgetTypeService::TYPE_GRAPH` | 2 | `dateField` | Time-series line chart |
+| `donut` | `WidgetTypeService::TYPE_DONUT` | 2 | `SourceFromDefinition` + `setDonutDisplay()` | Categorical pie/donut chart, **exclusive** (only `donut` shown for that source) |
+| `specific` | `WidgetTypeService::TYPE_SPECIFIC` | 2 | `setSpecificDisplay($icon, $template)` | Custom Twig template, **exclusive** (only `specific` shown for that source) |
+
+Sources without a `dateField` only see types that do not require a period (`value_single`, `donut`, `specific`).
+
 ## Creating a SQL/DQL Widget
 
 Implement `SourceDefinitionInterface` and return a `SourceSql` or `SourceDql` from `getDefinition()`:
@@ -103,11 +117,78 @@ class RevenueWidget implements SourceDefinitionInterface, SourceDataDefinitionIn
 
     public function getSpecificValues(WidgetRequest $request): array
     {
-        // Return arbitrary data for specific/custom widget type
+        // Return arbitrary data for specific/custom widget type.
+        // Also consumed by donut widget type (format: [['label' => string, 'value' => int|float], ...]).
         return [];
     }
 }
 ```
+
+## Creating a Donut Widget
+
+A donut widget plots categorical data (label → value) as a pie/donut chart. To opt a source into the `donut` type, call `setDonutDisplay()` on the `SourceFromDefinition` and produce the data in `getSpecificValues()` using the neutral format `[['label' => string, 'value' => int|float], ...]`. The bundle's own JS wrapper (`SpipuGraphDonut`) converts that to Google Charts on the client side.
+
+```php
+namespace App\WidgetSource;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Spipu\DashboardBundle\Entity\Source\SourceFromDefinition;
+use Spipu\DashboardBundle\Service\Ui\WidgetRequest;
+use Spipu\DashboardBundle\Source\SourceDataDefinitionInterface;
+use Spipu\DashboardBundle\Source\SourceDefinitionInterface;
+use Spipu\UiBundle\Form\Options\YesNo;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class UserActiveDonutWidget implements SourceDefinitionInterface, SourceDataDefinitionInterface
+{
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly YesNo $yesNoOptions,
+        private readonly TranslatorInterface $translator,
+    ) {}
+
+    public function getDefinition(): SourceFromDefinition
+    {
+        return (new SourceFromDefinition('user-active-donut', $this))
+            ->setDonutDisplay();
+    }
+
+    public function getRolesNeeded(): array
+    {
+        return [];
+    }
+
+    public function getValue(WidgetRequest $request): float { return 0.; }
+    public function getPreviousValue(WidgetRequest $request): float { return 0.; }
+    public function getValues(WidgetRequest $request): array { return []; }
+
+    public function getSpecificValues(WidgetRequest $request): array
+    {
+        $rows = $this->entityManager->getConnection()
+            ->executeQuery('SELECT active, COUNT(*) AS nb FROM spipu_user GROUP BY active')
+            ->fetchAllAssociative();
+
+        $counts = [];
+        foreach ($rows as $row) {
+            $counts[(int) $row['active']] = (int) $row['nb'];
+        }
+
+        $values = [];
+        foreach ($this->yesNoOptions->getOptions() as $key => $label) {
+            $values[] = [
+                'label' => $this->translator->trans($label),
+                'value' => $counts[(int) $key] ?? 0,
+            ];
+        }
+
+        return $values;
+    }
+}
+```
+
+When `setDonutDisplay()` is enabled, the configuration UI offers **only** the `donut` type for this source — same exclusivity model as `setSpecificDisplay()`.
+
+The donut type also requires the JS assets `google-graph-donut.js` + `spipu-graph-donut.js` from the UiBundle to be loaded on the page (already included in `@SpipuUi/base.html.twig`).
 
 ## Registering the Widget
 
@@ -195,7 +276,8 @@ Key methods available on all `Source` subclasses:
 | `setType(string)` | Value type: `SourceDefinitionInterface::TYPE_INT` or `TYPE_FLOAT` |
 | `setLowerBetter(bool)` | If `true`, a lower value is displayed as better (inverts color coding) |
 | `addFilter(SourceFilter)` | Add a filter to the widget |
-| `setSpecificDisplay(string $icon, string $template)` | Enable specific display with a custom Twig template |
+| `setSpecificDisplay(string $icon, string $template)` | Enable specific display with a custom Twig template (forces type `specific`) |
+| `setDonutDisplay(bool $enabled = true)` | Mark a `SourceFromDefinition` source as a donut chart (forces type `donut`) |
 | `setConditions(array)` | SQL WHERE conditions applied before aggregation |
 
 [back](./README.md)

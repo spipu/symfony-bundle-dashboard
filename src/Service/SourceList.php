@@ -24,6 +24,7 @@ class SourceList
 {
     private Security $security;
     private TranslatorInterface $translator;
+    private WidgetTypeService $widgetTypeService;
 
     /**
      * @var SourceDefinitionInterface[]
@@ -33,10 +34,12 @@ class SourceList
     public function __construct(
         Security $security,
         TranslatorInterface $translator,
+        WidgetTypeService $widgetTypeService,
         iterable $sources
     ) {
         $this->translator = $translator;
         $this->security = $security;
+        $this->widgetTypeService = $widgetTypeService;
 
         foreach ($sources as $source) {
             $this->addSource($source);
@@ -104,6 +107,7 @@ class SourceList
                 'filters'         => $this->getSourceFilters($source),
                 'needPeriod'      => ($source->getDefinition()->needPeriod() ? 1 : 0),
                 'specificDisplay' => $source->getDefinition()->getSpecificDisplayIcon(),
+                'availableTypes'  => $this->widgetTypeService->getAvailableWidgetTypes($source->getDefinition()),
             ];
         }
 
