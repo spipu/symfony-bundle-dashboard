@@ -217,9 +217,9 @@ abstract class Source
         return $this->specificDisplayTemplate;
     }
 
-    public function setDonutDisplay(bool $enabled = true): self
+    public function setDonutDisplay(): self
     {
-        $this->donutDisplay = $enabled;
+        $this->donutDisplay = true;
 
         return $this;
     }

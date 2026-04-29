@@ -277,7 +277,7 @@ Key methods available on all `Source` subclasses:
 | `setLowerBetter(bool)` | If `true`, a lower value is displayed as better (inverts color coding) |
 | `addFilter(SourceFilter)` | Add a filter to the widget |
 | `setSpecificDisplay(string $icon, string $template)` | Enable specific display with a custom Twig template (forces type `specific`) |
-| `setDonutDisplay(bool $enabled = true)` | Mark a `SourceFromDefinition` source as a donut chart (forces type `donut`) |
+| `setDonutDisplay()` | Mark a `SourceFromDefinition` source as a donut chart (forces type `donut`) |
 | `setConditions(array)` | SQL WHERE conditions applied before aggregation |
 
 [back](./README.md)

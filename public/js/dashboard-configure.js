@@ -1376,8 +1376,27 @@ class DashboardConfigure {
         return null;
     }
 
+    sanitizeDashboardContent()
+    {
+        for (let row of this.dashboardContent.rows) {
+            for (let col of row.cols) {
+                if (!Array.isArray(col.widgets)) {
+                    continue;
+                }
+                for (let widget of col.widgets) {
+                    let source = this.sources[widget.source];
+                    if (source && source.needPeriod !== 1) {
+                        widget.period = null;
+                    }
+                }
+            }
+        }
+    }
+
     dashboardSave()
     {
+        this.sanitizeDashboardContent();
+
         $.ajax({
             type: "POST",
             url: this.saveRouter,
