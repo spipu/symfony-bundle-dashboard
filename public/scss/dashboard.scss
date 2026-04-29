@@ -104,6 +104,7 @@ $breakpointXl: 1200px;
     .widget-content {
       padding: 15px;
       &.value-graph { min-height: 280px; }
+      &.value-donut { min-height: 280px; }
       &.value-single-content {
         .value-single {
           font-size: 32px;
