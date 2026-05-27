@@ -16,15 +16,31 @@ namespace Spipu\DashboardBundle\Service\Ui\Source\DataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Spipu\CoreBundle\Exception\ConnectionQuoterException;
+use Spipu\CoreBundle\Service\ConnectionQuoterFactoryInterface;
+use Spipu\CoreBundle\Service\ConnectionQuoterInterface;
 use Spipu\DashboardBundle\Exception\SourceException;
 
 class DoctrineSql extends AbstractDataProvider
 {
     protected EntityManagerInterface $entityManager;
+    protected ConnectionQuoterFactoryInterface $quoterFactory;
+    private ?ConnectionQuoterInterface $quoter = null;
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ConnectionQuoterFactoryInterface $quoterFactory
+    ) {
         $this->entityManager = $entityManager;
+        $this->quoterFactory = $quoterFactory;
+    }
+
+    private function getQuoter(): ConnectionQuoterInterface
+    {
+        if ($this->quoter === null) {
+            $this->quoter = $this->quoterFactory->create($this->entityManager->getConnection());
+        }
+        return $this->quoter;
     }
 
     public function getValue(): float
@@ -103,9 +119,7 @@ class DoctrineSql extends AbstractDataProvider
         ?string $dateTo = null,
         ?string $dateExpression = null
     ): string {
-        $connection = $this->entityManager->getConnection();
-
-        $tableName = $connection->quoteSingleIdentifier($this->definition->getEntityName());
+        $tableName = $this->getQuoter()->quoteIdentifier($this->definition->getEntityName());
         $conditions = $this->definition->getConditions();
 
         $conditions = array_merge($conditions, $this->prepareQueryConditionPeriod($dateFrom, $dateTo));
@@ -176,32 +190,22 @@ class DoctrineSql extends AbstractDataProvider
         return $this->entityManager->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
 
+    /**
+     * @throws ConnectionQuoterException
+     */
     protected function quoteValue(mixed $value): string
     {
         if (is_array($value)) {
-            foreach ($value as $subKey => $subValue) {
-                $value[$subKey] = $this->quoteValue($subValue);
+            if ($value === []) {
+                throw new ConnectionQuoterException('Cannot quote an empty list of values');
             }
-            return '(' . implode(',', $value) . ')';
+            return '(' . implode(
+                ',',
+                array_map(fn(mixed $subValue): string => $this->quoteValue($subValue), $value)
+            ) . ')';
         }
 
-        if ($value === null) {
-            return 'NULL';
-        }
-
-        if ($value === false) {
-            return 'FALSE';
-        }
-
-        if ($value === true) {
-            return 'TRUE';
-        }
-
-        if (is_int($value) || is_float($value)) {
-            return (string) $value;
-        }
-
-        return $this->entityManager->getConnection()->quote((string) $value);
+        return $this->getQuoter()->quoteValue($value);
     }
 
     protected function getSqlFieldName(string $field): string
