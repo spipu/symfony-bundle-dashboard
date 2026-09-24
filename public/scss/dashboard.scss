@@ -1,5 +1,3 @@
-$lightGrey: #F7F7F7;
-$middleGrey: #A0A0A0;
 $breakpointLg: 992px;
 $breakpointXl: 1200px;
 
@@ -13,14 +11,14 @@ $breakpointXl: 1200px;
 }
 
 .dashboard-container .dashboard-view {
-  background-color: $lightGrey;
+  background-color: var(--bs-tertiary-bg);
   padding: 30px;
   border-radius: 10px;
   .dashboard-title {
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
-    color: var(--info);
+    color: var(--bs-info);
     margin-bottom: 30px;
   }
   .tile-row {
@@ -42,7 +40,7 @@ $breakpointXl: 1200px;
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: white;
+      background-color: var(--bs-body-bg);
       z-index: 999;
       opacity: .8;
       display: none;
@@ -66,7 +64,7 @@ $breakpointXl: 1200px;
         border-width: 8px;
         border-style: solid;
         border-radius: 50%;
-        border-color: #c9c9c9 transparent transparent transparent;
+        border-color: var(--bs-secondary-color) transparent transparent transparent;
         animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
       }
 
@@ -164,7 +162,7 @@ $breakpointXl: 1200px;
   width: 100%;
   .dashboard-configure-show {
     flex: 1;
-    background-color: $lightGrey;
+    background-color: var(--bs-tertiary-bg);
     padding: 30px;
     border-radius: 10px;
     margin-right: 30px;
@@ -180,12 +178,12 @@ $breakpointXl: 1200px;
     width: calc(100% + 30px);
     &:hover, &.widget-item-selected {
       .card {
-        color: var(--info);
-        border-color: var(--info);
+        color: var(--bs-info);
+        border-color: var(--bs-info);
         .type-icon {
-          border-color: var(--info);
+          border-color: var(--bs-info);
           &.value-single {
-            span { background-color: var(--info); }
+            span { background-color: var(--bs-info); }
           }
         }
       }
@@ -246,7 +244,7 @@ $breakpointXl: 1200px;
         height: 40px;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid var(--secondary);
+        border: 1px solid var(--bs-secondary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -256,7 +254,7 @@ $breakpointXl: 1200px;
             font-size: 13px;
             line-height: 12px;
             color: white;
-            background-color: var(--secondary);
+            background-color: var(--bs-secondary);
             font-weight: bold;
             border-radius: 3px;
             padding: 3px;
@@ -289,13 +287,13 @@ $breakpointXl: 1200px;
     }
     .card.border-danger, .card.border-success {
       .type-icon {
-        color: var(--secondary);
-        border-color: var(--secondary);
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
         &.value-single {
-          span { background-color: var(--secondary); }
+          span { background-color: var(--bs-secondary); }
         }
       }
-      .widget-title { color: var(--secondary); }
+      .widget-title { color: var(--bs-secondary); }
     }
   }
 
@@ -310,7 +308,7 @@ $breakpointXl: 1200px;
       padding: 0;
       margin: 0;
       font-size: 18px;
-      background: white;
+      background: var(--bs-body-bg);
       border-style: solid;
       border-width: 1px;
       border-radius: 50%;
@@ -342,13 +340,13 @@ $breakpointXl: 1200px;
       .col-item {
         height: 40px;
         border-radius: 5px;
-        background-color: var(--secondary);
+        background-color: var(--bs-secondary);
       }
     }
     &:hover {
       .card {
-        border-color: var(--info);
-        .col-item { background-color: var(--info); }
+        border-color: var(--bs-info);
+        .col-item { background-color: var(--bs-info); }
       }
     }
   }
@@ -382,30 +380,30 @@ $breakpointXl: 1200px;
           height: 40px;
           padding: 5px;
           border-radius: 5px;
-          color: var(--secondary);
-          border: 1px solid $middleGrey;
+          color: var(--bs-secondary);
+          border: 1px solid var(--bs-border-color);
           display: flex;
           align-items: center;
           justify-content: center;
           margin-top: 5px;
           cursor: pointer;
           &:hover, &.selected {
-            border-color: var(--info);
-            color: var(--info);
+            border-color: var(--bs-info);
+            color: var(--bs-info);
           }
           &.value-single {
             span {
               font-size: 13px;
               line-height: 12px;
               color: white;
-              background-color: var(--secondary);
+              background-color: var(--bs-secondary);
               font-weight: bold;
               border-radius: 3px;
               padding: 3px;
               display: inline-block;
             }
             &:hover, &.selected {
-              span { background-color: var(--info); }
+              span { background-color: var(--bs-info); }
             }
           }
           &.value-compare {
@@ -445,8 +443,8 @@ $breakpointXl: 1200px;
           height: 40px;
           padding: 5px;
           border-radius: 3px;
-          color: var(--secondary);
-          border: 1px solid $middleGrey;
+          color: var(--bs-secondary);
+          border: 1px solid var(--bs-border-color);
           cursor: pointer;
           .row {
             margin: 0 -2px;
@@ -463,16 +461,16 @@ $breakpointXl: 1200px;
             }
           }
           .col-item {
-            background-color: var(--secondary);
+            background-color: var(--bs-secondary);
             width: 100%;
             height: 100%;
             border-radius: 5px;
           }
         }
         &:hover, &.selected {
-          border-color: var(--info);
+          border-color: var(--bs-info);
           .col-item {
-            background-color: var(--info);
+            background-color: var(--bs-info);
           }
         }
       }
@@ -481,7 +479,7 @@ $breakpointXl: 1200px;
 
   .dashboard-row-dragged-over {
     padding-bottom: 20px;
-    border-bottom: 2px solid var(--success);
+    border-bottom: 2px solid var(--bs-success);
     &.dashboard-main-name {
       padding-bottom: 0;
       margin-bottom: 20px;
@@ -489,10 +487,10 @@ $breakpointXl: 1200px;
   }
 
   .dashboard-col-dragged-over-before {
-    border-left: 2px solid var(--success);
+    border-left: 2px solid var(--bs-success);
   }
 
   .dashboard-col-dragged-over-after {
-    border-right: 2px solid var(--success);
+    border-right: 2px solid var(--bs-success);
   }
 }
