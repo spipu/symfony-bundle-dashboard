@@ -16,6 +16,7 @@ namespace Spipu\DashboardBundle\Service\Ui\Source\DataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
+use SortDirection;
 use Spipu\DashboardBundle\Exception\SourceException;
 
 class DoctrineDql extends AbstractDataProvider
@@ -80,7 +81,7 @@ class DoctrineDql extends AbstractDataProvider
         $queryBuilder = $this->prepareQueryBuilder();
         $queryBuilder->addSelect($dateExpression . ' AS t');
         $queryBuilder->groupBy('t');
-        $queryBuilder->orderBy('t', 'ASC');
+        $queryBuilder->orderBy('t', SortDirection::Ascending);
 
         $rows = $queryBuilder->getQuery()->getArrayResult();
         foreach ($rows as $row) {
