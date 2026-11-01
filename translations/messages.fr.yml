@@ -1,18 +1,19 @@
 spipu:
   dashboard:
     dashboard:
-      create: "Créer un nouveau tableau de board"
-      delete: "Supprimer le tableau de board"
-      configure: "Configurer le tableau de board"
+      create: "Créer un nouveau tableau de bord"
+      delete: "Supprimer le tableau de bord"
+      configure: "Configurer le tableau de bord"
       rename: "Renommer le tableau de bord"
-      duplicate: "Dupliquer le tableau de board"
-      empty: "Vous n'avez pas encore configurer votre tableau de bord."
+      duplicate: "Dupliquer le tableau de bord"
+      empty: "Vous n'avez pas encore configuré votre tableau de bord."
     label:
-      title_modal_delete_confirm: "Voulez vous vraiment supprimer ce tableau de board ?"
+      title_modal_delete_confirm: "Voulez-vous vraiment supprimer ce tableau de bord ?"
       label_dashboard_name: "Nom du tableau de bord"
       source: "Source"
       type: "Type"
       period: "Période"
+      all: "Tous"
       confirm_delete_row: "Voulez-vous vraiment supprimer cette ligne ?"
       confirm_clone_row: "Voulez-vous vraiment dupliquer cette ligne ?"
       confirm_delete_widget: "Voulez-vous vraiment supprimer ce widget ?"
@@ -21,7 +22,7 @@ spipu:
       period:
         title: "Période"
         from: "De"
-        to: "A"
+        to: "À"
         presets: "Préconfigurations"
       action:
         apply_period: "Appliquer la période"
@@ -35,11 +36,11 @@ spipu:
       intro_text2: "Commencez par ajouter <b>une nouvelle ligne</b> afin d'y mettre vos widgets favoris."
       add_new_row: "Ajouter une nouvelle ligne"
       cancel_new_row: "Annuler la nouvelle ligne"
-      nb_cols_select: "Sélectionnez <b>le nombre de widget maximum</b> que vous souhaitez positionner sur cette ligne."
+      nb_cols_select: "Sélectionnez <b>le nombre de widgets maximum</b> que vous souhaitez positionner sur cette ligne."
       nb_cols_help: "(la taille des widgets peut être modifiée dans leurs paramètres)"
       nb_cols_3: "3 widgets"
       nb_cols_4: "4 widgets"
-      configure_widget: "Configuration du Widget"
+      configure_widget: "Configuration du widget"
       field_source: "Donnée"
       field_type: "Visualisation"
       field_period: "Période"
@@ -53,9 +54,9 @@ spipu:
       not_allowed_to_delete_dashboard: "Vous ne pouvez pas supprimer ce tableau de bord"
       not_allowed_to_rename_dashboard: "Vous ne pouvez pas renommer ce tableau de bord"
       name_missing: "Le nom est obligatoire"
-      name_already_used: "Ce nom est déjà utilisé par un autre tableau de board"
+      name_already_used: "Ce nom est déjà utilisé par un autre tableau de bord"
     flash_alert_message:
-      success_saved: "Votre tableau de board a été sauvegardé"
+      success_saved: "Votre tableau de bord a été sauvegardé"
       not_desktop: "Vous ne pouvez pas utiliser un petit écran pour éditer votre tableau de bord"
     title: "Widgets"
 
@@ -91,7 +92,7 @@ spipu:
       value_compare: "Comparaison de valeurs"
       graph: "Graph"
       donut: "Donut"
-      specific: "Specifique"
+      specific: "Spécifique"
 
     source:
       error:
