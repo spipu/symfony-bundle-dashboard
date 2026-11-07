@@ -21,7 +21,7 @@ use Spipu\DashboardBundle\Exception\SourceException;
 
 class DoctrineDql extends AbstractDataProvider
 {
-    private EntityManagerInterface $entityManager;
+    protected EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
